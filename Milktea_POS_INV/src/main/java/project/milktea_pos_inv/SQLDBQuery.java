@@ -11,12 +11,33 @@ import java.util.logging.Logger;
 
 public class SQLDBQuery {
 
-    // ✅ Database credentials
-    private static final String URL = "jdbc:mysql://localhost:3306/milkteatime";
+    // Database credentials
+    
+    /* using infinityfree cloud server hosting:
+    
+    private static final String URL = "jdbc:mysql://sql113.infinityfree.com/if0_40250482_milkteatime";
+    private static final String USER = "if0_40250482";
+    private static final String PASSWORD = "grp9milktea";
+    
+    */
+    
+    /* using localhost
+    
+    private static final String URL = "jdbc:mysql://localhost/milkteatime";
     private static final String USER = "root";
-    private static final String PASSWORD = "sethseth336";
-
-    // ✅ Connection and SQL objects
+    private static final String PASSWORD = "";
+    
+    // */
+    
+    //* using aiven hosting
+    
+    private static final String URL = "jdbc:mysql://milkteatime-milkteatime.f.aivencloud.com:11810/defaultdb?ssl-mode=REQUIRED";
+    private static final String USER = "avnadmin";
+    private static final String PASSWORD = "";
+    
+    // */
+    
+    // Connection and SQL objects
     private Connection connection;
     private Statement statement;
     private PreparedStatement preparedStatement;
@@ -38,7 +59,7 @@ public class SQLDBQuery {
         return connection;
     }
 
-    // ✅ Inner class for account queries
+    // Inner class for account queries
     public class AccountQuery {
 
         private static final String TABLE_NAME = "accounts";
@@ -49,7 +70,7 @@ public class SQLDBQuery {
 
         private final Connection connection;
 
-        // ✅ Pass the connection from outer class
+        // Pass the connection from outer class
         public AccountQuery(Connection connection) {
             this.connection = connection;
         }
@@ -59,7 +80,7 @@ public class SQLDBQuery {
             return new SystemAccount();
         }
 
-        // ✅ Search for an account by type and username
+        // Search for an account by type and username
         public boolean searchAccount(String user, String username) {
             String query = "SELECT " + USERNAME_COL + " FROM " + TABLE_NAME
                     + " WHERE " + USERNAME_COL + " = ? AND " + TYPE_COL + " = ?";
@@ -81,7 +102,7 @@ public class SQLDBQuery {
             return false;
         }
 
-        // ✅ Verify full account (username, password, type)
+        // Verify full account (username, password, type)
         public boolean verifyAccount(String user, String username, String password) {
             String query = "SELECT * FROM " + TABLE_NAME
                     + " WHERE " + USERNAME_COL + " = ? AND " + TYPE_COL + " = ? AND " + PASSWORD_COL + " = ?";
